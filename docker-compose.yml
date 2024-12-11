@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - "27017:27017"  
+    volumes:
+      - mongo_data:/data/db  
+    networks:
+      - practice_network
+
+  # dataframe:
+  #   image: usuario/mi-script:latest 
+  #   container_name: script_container
+  #   depends_on:
+  #     - mongo
+  #   environment:
+  #     - MONGO_URI=mongodb://mongo_db:27017/mi_base_de_datos
+  #   networks:
+  #     - my_network
+  #   command: python3 /app/mi_script.py
+  #   volumes:
+  #     - ./mi_script:/app
+
+volumes:
+  mongo_data:
+
+networks:
+  practice_network:
+    driver: bridge
