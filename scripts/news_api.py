@@ -2,7 +2,7 @@ import time
 import requests
 from pymongo import MongoClient
 
-client = MongoClient('mongodb://mongo_db:27017/')
+client = MongoClient('mongodb://10.133.27.157:27017/')
 db = client['newsdb']
 collection =db['news']
 print('Inserting...')
@@ -19,7 +19,6 @@ while True:
     try:
         # Insert in MongoDB
         result = collection.insert_many(news)
-        print("sigo")
     except Exception as e:
         print("error"+ str(e))
     time.sleep(300) #Executed every 300sec (5min)
