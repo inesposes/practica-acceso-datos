@@ -1,2 +1,5 @@
 pymongo==4.10.1
 pandas==2.2.3
+pyarrow==18.1.0
+fastparquet==2024.11.0
+requests==2.32.3
