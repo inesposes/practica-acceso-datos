@@ -1,13 +1,10 @@
 import time
 import requests
-# from mongo_connection import connect_mongo
 from pymongo import MongoClient
 
 client = MongoClient('mongodb://mongo_db:27017/')
 db = client['bicicorunha']
 collection =db['stations']
-# client, collection=connect_mongo()
-print(collection)
 print('Inserting...')
 while True: 
     #API Request
