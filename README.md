@@ -15,3 +15,5 @@ docker push inesposes/mongo-data-inserter:latest
 
 3. docker compose
 docker
+
+4. pip list --format=freeze > requirements.txt
