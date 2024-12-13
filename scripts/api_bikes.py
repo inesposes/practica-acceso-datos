@@ -5,7 +5,6 @@ from pymongo import MongoClient
 client = MongoClient('mongodb://mongo_db:27017/')
 db = client['bicicorunha']
 collection =db['stations']
-print('Inserting...')
 while True: 
     #API Request
     endpoint="http://api.citybik.es/v2/networks/bicicorunha"
