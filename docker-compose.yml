@@ -10,7 +10,7 @@ services:
       - practice_network
 
   data-inserter:
-    image: inesposes/mongo-data-inserter:latest 
+    image: inesposes/practica-acceso-datos:latest 
     container_name: data-inserter
     depends_on:
       - mongo
@@ -18,8 +18,6 @@ services:
       - MONGO_URI=mongodb://mongo_db:27017
     networks:
       - practice_network
-    # volumes:
-    #   - ./mi_script:/app
 
 volumes:
   mongo_data:
