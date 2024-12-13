@@ -1,26 +1,3 @@
-# practica-acceso-datos
-Práctica final da avaliación de SBD
-
-
-
-1. 
-Hay un env_conf.yml para crear una configuración de un environment conda. Ejecutar los siguientes comandos:
-conda env create --file env_conf.yml
-conda activate acceso-datos
-
-
-2. docker image
-docker tag 801eea734ec6 inesposes/mongo-data-inserter:latest
-docker push inesposes/mongo-data-inserter:latest
-
-3. docker compose
-docker
-
-4. pip list --format=freeze > requirements.txt
-
-
----
-
 # Ejercicio: Desarrollo e integración de scripts en Python
 
 ## Descripción del proyecto
@@ -34,26 +11,25 @@ La API seleccionada para el ejercicio es la de [Citybikes](https://citybik.es/),
 ## Estructura del proyecto
 
 ```plaintext
-📂 Ejercicio-Scripts-Python
-├── 📁 scripts
-│   ├── script1.py
-│   ├── script2.py
+📂 practica-acceso-datos
 ├── 📁 datasets
 │   ├── stations.csv
 │   ├── stations.parquet
-├── 📁 requi
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-├── 📄 requirements.txt
+├── 📁 requirements
+│   ├── requirements.txt
+│   ├── requirements_optional.txt
+├── 📁 scripts
+│   ├── api_bikes.py
+│   ├── api_news.yml
+│   ├── file_export.yml
+├── 🐳 Dockerfile
+├── 🐳 docker-compose.yml
 ├── 📄 README.md
-└── 📂 docs
-    ├── guía_ejecución.md
-    ├── referencias.md
 ```
 
 ---
 
-## Parte básica (obligatoria)
+## Parte básica
 
 ### Script 1
 - **Funcionalidad:**
