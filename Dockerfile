@@ -1,4 +1,4 @@
-FROM python:3.12
+FROM python:3.12-slim
 COPY requirements.txt /
 COPY scripts/mongo_insertion.py /
 

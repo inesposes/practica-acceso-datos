@@ -1,5 +1,4 @@
 boltons==23.0.0
-Brotli==1.0.9
 certifi==2024.7.4
 cffi==1.16.0
 charset-normalizer==3.3.2
