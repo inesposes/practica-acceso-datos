@@ -29,20 +29,30 @@ La API seleccionada para el ejercicio es la de [Citybikes](https://citybik.es/),
 
 ---
 
-## Parte básica
+## Scripts
 
-### Script 1
+### api_bikes.py
 - **Funcionalidad:**
-  - Se conecta a la API de Citybikes a intervalos regulares configurables.
-  - Obtiene datos de la API y los almacena en una base de datos MongoDB.
+  - Se conecta a la API de citybik.es cada 5 minutos e inserta los datos sobre las estaciones en una base de datos mongo.
   - Se ejecuta de forma continua hasta que se cancela manualmente.
+- **Ejecución:**
+   - Este script ya se encuentra corriendo en una instancia de OpenStack. Se ha creado una imagen (véase Dockerfile) a partir de él que está disponible en DockerHub (https://hub.docker.com/r/inesposes/practica-acceso-datos). Esta imagen se ha incluído en el docker-compose.yml, en el cual se levanta el servicio de la base de datos Mongo y el servicio que corre el script mencionado.
+### api_news.py
+- **Funcionalidad:**
+  - Lee los datos almacenados en la base de datos MongoDB y los carga en un dataframe de Pandas.
+  - Exporta los siguientes campos en dos formatos (CSV y Parquet):
+- **Ejecución:**
+   - pip install -r requirements/requirements.txt
+   - Necesaria conexión a la VPN del Cesga en la que se está ejecutando el script para poder hacer una inserción de datos contra la base de datos que está levantada en el servidor mencionado anteriormente.
+   - En local: python api_news.py
 
-### Script 2
+### file_export.py
 - **Funcionalidad:**
   - Lee los datos almacenados en la base de datos MongoDB y los carga en un dataframe de Pandas.
   - Exporta los siguientes campos en dos formatos (CSV y Parquet):
     - `id`, `name`, `timestamp`, `free_bikes`, `empty_slots`, `uid`, `last_updated`, `slots`, `normal_bikes`, `ebikes`.
-
+  - Los exporta en la carpeta datasets en la que ahora mismo hay dos de ejemplo.
+- **Ejecución:**
 ---
 
 ## Parte avanzada (opcional)
@@ -99,28 +109,6 @@ docker build -t citybikes-script .
 ```bash
 docker-compose up
 ```
-
----
-
-## Documentación
-
-- [Guía de ejecución](docs/guía_ejecución.md)
-- [Referencias y recursos adicionales](docs/referencias.md)
-
----
-
-## Criterios de evaluación
-
-1. **Funcionamiento correcto:**
-   - Verificación de que los scripts cumplen con las especificaciones del enunciado.
-2. **Calidad del código:**
-   - Buena estructura, uso de buenas prácticas y comentarios adecuados.
-3. **Documentación:**
-   - El README.md debe ser claro, completo y útil para usuarios nuevos.
-4. **Control de errores:**
-   - Manejo robusto de errores de conectividad y ejecución.
-5. **Funcionalidades avanzadas:**
-   - Implementación correcta y clara de las opciones avanzadas y extra.
 
 ---
 
