@@ -1,7 +1,6 @@
 FROM python:3.12-slim
 COPY requirements.txt /
-COPY scripts/mongo_insertion.py /
-#ola
+COPY scripts/api_news.py /
 RUN pip install --no-cache-dir -r /requirements.txt
 
-CMD ["python", "./mongo_insertion.py"]
+CMD ["python", "./api_news.py"]
