@@ -43,7 +43,7 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
 
 ### 🚴‍♂️api_bikes.py
 - **Funcionalidad:**
-  - Se conecta a la API de citybik.es cada 5 minutos e inserta los datos sobre las estaciones en una base de datos MongoDB.
+  - Se conecta a la API de citybik.es cada 5 minutos e inserta los datos sobre el estado actual de las 49 estaciones.
   - Se ejecuta de forma continua hasta que se cancela manualmente.
   - Un ejemplo de datos de una estación:
     ```json
@@ -116,8 +116,9 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
 - **Ejecución:**
    - Es necesario que tengas una API key que puedes solicitar en este [enlace](https://newsapi.org/register). 
    - Seguidamente, crea un .env con los datos del env.example y cubre "NEWS_API_KEY" con tu API key
+   - Si se ha levantado el servidor MongoDB en local hay que cambiar la IP que hay dentro del script por 'mongo_db'. De lo contrario se insertarán en el servidor mencionado anteriormente
    - Desde el directorio raíz de este proyecto: python scripts/api_news.py
-   - Nota: si se ha levantado el servidor MongoDB en local es necesario cambiar la IP que hay dentro del script por 'mongo_db'
+   
 
 ### 📥file_export.py
 - **Funcionalidad:**
@@ -127,6 +128,7 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
     - `id`, `name`, `timestamp`, `free_bikes`, `empty_slots`, `uid`, `last_updated`, `slots`, `normal_bikes`, `ebikes`.
   - Los exporta en la carpeta datasets en la que ahora mismo hay dos de ejemplo.
 - **Ejecución:**
+   - Si se ha levantado el servidor MongoDB en local hay que cambiar la IP que hay dentro del script por 'mongo_db'
    - Desde el directorio raíz de este proyecto: python scripts/file_export.py
 
 
