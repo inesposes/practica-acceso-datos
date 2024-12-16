@@ -15,5 +15,5 @@ while True:
         # Insert in MongoDB
         result = collection.insert_many(stations)
     except Exception as e:
-        print("error"+ str(e))
+        print("Error inserting"+ str(e))
     time.sleep(300) #Executed every 300sec (5min)
