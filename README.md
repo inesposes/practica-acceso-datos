@@ -24,6 +24,7 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
 │   ├── api_bikes.py
 │   ├── api_news.py
 │   ├── file_export.py
+├── 🔗 .gitignore
 ├── 🐳 docker-compose.yml
 ├── 🐳 Dockerfile
 ├── 🛠️env.example
