@@ -101,7 +101,7 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
     ```
 - **Ejecución:**
    - Este script ya se está ejecutando tanto si estás usando la VPN del CESGA como si has levantado el docker en local. Esto es debido a que el docker-compose.yml ya levanta el servicio que lo ejecuta.
-      - Para poder levantar ese servicio dentro del docker-compose se ha creado una imagen disponible en [DockerHub](https://hub.docker.com/repository/docker/inesposes/practica-acceso-datos/general) a partir de este script.
+      - Para poder levantar ese servicio dentro del docker-compose se ha creado una imagen a partir del Dockerfile. Se encuentra disponible en [DockerHub](https://hub.docker.com/repository/docker/inesposes/practica-acceso-datos/general)
       - Asimismo, se ha configurado un workflow que actualiza automáticamente la imagen en DockerHub cada vez que se sube un cambio al repositorio.
    - El script necesita una variable de entorno 'MONGO_URI' que se especifica en el docker-compose.yml. Si se desease ejecutar el script independientemente de la variable de entorno habría que pasársela. 
    - Se ejecuta de forma continua hasta que se cancela manualmente. Para parar la ejecución:
