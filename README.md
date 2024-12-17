@@ -4,7 +4,7 @@
 
 Este proyecto forma parte de una entrega para la asignatura Sistemas de Big Data del curso de especialización en IA y Big Data.
 
-El objetivo de este ejercicio es desarrollar un script de  Python que interactúe con una API y que posteriormente introduzcan los datos en una base de datos MongoDB. Por último, se ha añadido un script que permite exportar un .csv y un .parquet de los datos que han sido guardados en este tiempo.
+El objetivo de este ejercicio es desarrollar un script de  Python que interactúe con una API y que posteriormente introduzca los datos en una base de datos MongoDB. Por último, se ha añadido un script que permite exportar un .csv y un .parquet de los datos que han sido guardados.
 
 La API seleccionada para el ejercicio es la de [Citybik.es](https://citybik.es/), que proporciona información en tiempo real sobre el estado de las estaciones de bicicletas de alquiler en varias ciudades del mundo. He utilizado los datos para la ciudad de A Coruña.
 
@@ -49,7 +49,7 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
    ```bash
    pip install -r requirements.txt
    ```
-3. Crea un .env en el que incluyas las variables de entorno del .env.example. Más adelante se detallará qué valores incluír en ellas. 
+3. Crea un .env en el que incluyas las variables de entorno del .env.example. Más adelante se detallará con qué valores cubrirlas. 
 4. Conexión servicio MongoDB. Dos opciones:
     - a) Conectarse a la VPN del CESGA
       - Cubrir la variable "SERVER" del .env con la IP que se detalla en la entrega. 
@@ -101,10 +101,16 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
     ```
 - **Ejecución:**
    - Este script ya se está ejecutando tanto si estás usando la VPN del CESGA como si has levantado el docker en local. Esto es debido a que el docker-compose.yml ya levanta el servicio que corre este script.
+   - El script necesita una variable de entorno 'MONGO_URI' que se especifica en el docker-compose.yml. Si se desease ejecutar el script independientemente de la variable de entorno habría que pasársela. 
    - Se ejecuta de forma continua hasta que se cancela manualmente. Para parar la ejecución:
         ```bash
           docker stop DOCKER_ID
         ```
+    - Si lo has hecho en local puedes acceder al cliente de Mongo y ver los datos insertados ejecutando:
+        ```bash
+          docker exec -it mongo_db mongosh
+        ```
+     
 
 ### 📰 api_news.py
 - **Funcionalidad:**
@@ -138,7 +144,10 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
    - Seguidamente, cubre la variable "NEWS_API_KEY" del .env con tu API key
    - Desde el directorio raíz de este proyecto: python scripts/api_news.py
    - Se ejecuta de forma continua hasta que se cancela manualmente. Para parar la ejecución pulsa Ctrl+C
-
+   - Si lo has hecho en local puedes acceder al cliente de Mongo y ver los datos insertados ejecutando:
+        ```bash
+          docker exec -it mongo_db mongosh
+        ```
 ### 📥file_export.py
 - **Funcionalidad:**
   - Lee los datos almacenados en la base de datos MongoDB 'bicicorunha' y los carga en un dataframe de Pandas.
