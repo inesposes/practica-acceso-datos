@@ -7,8 +7,9 @@ import os
 
 load_dotenv()
 
-
-client = MongoClient('mongodb://10.133.27.157:27017/')
+server = os.getenv('SERVER')
+mongo_client_uri='mongodb://'+server+':27017/'
+client = MongoClient(mongo_client_uri)
 db = client['news']
 collection =db['technews']
 #API Request

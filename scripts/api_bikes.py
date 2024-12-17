@@ -1,8 +1,11 @@
 import time
 import requests
 from pymongo import MongoClient
+import os
 
-client = MongoClient('mongodb://mongo_db:27017/')
+
+mongo_client_uri = os.getenv('MONGO_URI')  
+client = MongoClient(mongo_client_uri)
 db = client['bicicorunha']
 collection =db['stations']
 while True: 

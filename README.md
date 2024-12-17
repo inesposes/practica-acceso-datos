@@ -1,6 +1,6 @@
 # Ejercicio: Desarrollo e integración de scripts en Python
 
-## 📜 Descripción del proyecto
+## 📜 Descripción
 
 Este proyecto forma parte de una entrega para la asignatura Sistemas de Big Data del curso de especialización en IA y Big Data.
 
@@ -8,9 +8,9 @@ El objetivo de este ejercicio es desarrollar un script de  Python que interactú
 
 La API seleccionada para el ejercicio es la de [Citybik.es](https://citybik.es/), que proporciona información en tiempo real sobre el estado de las estaciones de bicicletas de alquiler en varias ciudades del mundo. He utilizado los datos para la ciudad de A Coruña.
 
-Adicionalmente, se ha realizado un script que consulta una API de noticias [NewsAPI](https://newsapi.org/) y los inserta en una base de datos MongoDB.
+Adicionalmente, se ha realizado un script que consulta una API de noticias [NewsAPI](https://newsapi.org/) y los inserta en otra base de datos MongoDB.
 
-> Se presupone que para este trabajo se tiene una conexión a una VPN del CESGA, gracias a unos credenciales proporcionados con propósito académico.  No obstante, se incluyen todas las explicaciones para poder probarlo en local.
+> Se presupone que para este trabajo se tiene una conexión a una VPN del CESGA, gracias a unas cuentas proporcionadas con propósito académico.  No obstante, se incluyen todas las explicaciones para poder probarlo en local.
 ---
 
 ## 📁 Estructura del proyecto
@@ -33,18 +33,40 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
 ```
 
 ---
+##  ⚙️Requisitos
+- Python 3.8+
+- Docker instalado o posibilidad de conexión a la VPN del CESGA
+
+---
+
+## 💻 Instalación
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/inesposes/practica-acceso-datos
+   cd practica-acceso-datos
+   ```
+2. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Crea un .env en el que incluyas las variables de entorno del .env.example. Más adelante se detallará qué valores incluír en ellas. 
+4. Conexión servicio MongoDB. Dos opciones:
+    - a) Conectarse a la VPN del CESGA
+      - Cubrir la variable "SERVER" del .env con la IP que se detalla en la entrega. 
+      - Ahí se ha levantado el docker-compose.yml, que pone en funcionamiento  el servicio de MongoDB y empieza a ejecutar el script api_bikes.py
+    - b) Levantar el docker-compose.yml en local. 
+      - Cubrir la variable "SERVER" del .env con "mongo_db".  
+      - Ejecuta el siguiente comando:
+        ```bash
+          docker-compose up -d
+        ```
+--- 
 
 ## 📝Scripts
-
-###  ⚙️Requisitos previos a la ejecución de los scripts
-- git clone https://github.com/inesposes/practica-acceso-datos
-- Python 3.8+
-- Instalación de dependencias: ```pip install -r requirements.txt```
 
 ### 🚴‍♂️api_bikes.py
 - **Funcionalidad:**
   - Se conecta a la API de citybik.es cada 5 minutos e inserta los datos sobre el estado actual de las 49 estaciones.
-  - Se ejecuta de forma continua hasta que se cancela manualmente.
   - Un ejemplo de datos de una estación:
     ```json
     {
@@ -78,18 +100,15 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
 
     ```
 - **Ejecución:**
-   - Necesaria conexión a la VPN CESGA. Este script ya se encuentra corriendo en una instancia de OpenStack del CESGA. 
-      - Se ha creado una imagen (véase Dockerfile) que está disponible en   [DockerHub](https://hub.docker.com/r/inesposes/practica-acceso-datos). 
-      - Se ha configurado un workflow en Github para que cada vez que se hagan cambios en la imagen estos se actualicen instantáneamente en DockerHub
-      - Esta se ha utilizado en el docker-compose.yml, en el cual se levanta el servicio de la base de datos Mongo y el servicio que corre el script mencionado.
-   - Si se quiere probar en local, hay que ejecutar el siguiente comando. El script empezaría a ejecutarse automáticamente.
-      ```bash
-        docker-compose up -d
-      ```
+   - Este script ya se está ejecutando tanto si estás usando la VPN del CESGA como si has levantado el docker en local. Esto es debido a que el docker-compose.yml ya levanta el servicio que corre este script.
+   - Se ejecuta de forma continua hasta que se cancela manualmente. Para parar la ejecución:
+        ```bash
+          docker stop DOCKER_ID
+        ```
+
 ### 📰 api_news.py
 - **Funcionalidad:**
   - Se conecta a la API de newsapi.org una vez al día y recoge 100 noticias que incluyan la palabra 'Tech' que hayan sido publicadas entre ese día y el día anterior.
-  - Se ejecuta de forma continua hasta que se cancela manualmente.
   - Un ejemplo de noticia insertada:
   ```json
    {
@@ -114,21 +133,19 @@ Adicionalmente, se ha realizado un script que consulta una API de noticias [News
   ```
 
 - **Ejecución:**
+
    - Es necesario que tengas una API key que puedes solicitar en este [enlace](https://newsapi.org/register). 
-   - Seguidamente, crea un .env con los datos del env.example y cubre "NEWS_API_KEY" con tu API key
-   - Si se ha levantado el servidor MongoDB en local hay que cambiar la IP que hay dentro del script por 'mongo_db'. De lo contrario se insertarán en el servidor mencionado anteriormente
+   - Seguidamente, cubre la variable "NEWS_API_KEY" del .env con tu API key
    - Desde el directorio raíz de este proyecto: python scripts/api_news.py
-   
+   - Se ejecuta de forma continua hasta que se cancela manualmente. Para parar la ejecución pulsa Ctrl+C
 
 ### 📥file_export.py
 - **Funcionalidad:**
-  - Si no se tiene conexión a la VPN del CESGA, es necesario cambiar la IP de dentro del script por 'mongo_db', para que consulte al Docker levantado en local.
   - Lee los datos almacenados en la base de datos MongoDB 'bicicorunha' y los carga en un dataframe de Pandas.
   - Exporta los siguientes campos en dos formatos (CSV y Parquet):
     - `id`, `name`, `timestamp`, `free_bikes`, `empty_slots`, `uid`, `last_updated`, `slots`, `normal_bikes`, `ebikes`.
-  - Los exporta en la carpeta datasets en la que ahora mismo hay dos de ejemplo.
+  - Los exporta en la carpeta 'datasets' en las que ahora mismo hay dos de ejemplo.
 - **Ejecución:**
-   - Si se ha levantado el servidor MongoDB en local hay que cambiar la IP que hay dentro del script por 'mongo_db'
    - Desde el directorio raíz de este proyecto: python scripts/file_export.py
 
 
